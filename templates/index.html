@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microplastic Detection System</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #0078d7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005fa3;
+        }
+
+        .count-box {
+            margin: 20px auto;
+            padding: 15px;
+            width: 300px;
+            border-radius: 10px;
+            background: #e8f4ff;
+            color: #003366;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        .images {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .image-box {
+            width: 400px;
+        }
+
+        .image-box img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔬 Microplastic Detection System</h1>
+
+    <div class="container">
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <br>
+            <button type="submit">Detect Microplastics</button>
+        </form>
+
+        {% if particle_count is not none %}
+        <div class="count-box">
+            Total Particles Detected: {{ particle_count }}
+        </div>
+        {% endif %}
+
+        {% if uploaded_image or result_image %}
+        <div class="images">
+
+            {% if uploaded_image %}
+            <div class="image-box">
+                <h2>Uploaded Image</h2>
+                <img src="{{ uploaded_image }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+
+            {% if result_image %}
+            <div class="image-box">
+                <h2>Detection Result</h2>
+                <img src="{{ result_image }}" alt="Detection Result">
+            </div>
+            {% endif %}
+
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
